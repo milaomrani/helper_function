@@ -37,3 +37,35 @@ for filename in os.listdir(source_folder):
         new_filename = filename.replace("_G_1.JPG", "_1.JPG")
         os.rename(os.path.join(source_folder, filename), os.path.join(source_folder, new_filename))
         print(new_filename)
+# =======================================================================
+# compaer two folder and see if the image and its mask is available
+
+# This acript check the source image folder and 
+# its mask and move the MISSING source images that they don't have mask in the MISSING folder.
+
+import threading
+import logging
+import os
+import glob
+import argparse
+import random
+import shutil
+
+
+folder_src = ""
+folder_msk = ""
+folder_missing = ""
+
+list_folder_src = os.listdir(f'{folder_src}/')
+list_folder_msk = os.listdir(f'{folder_msk}/')
+
+print(f'total images of src {len(list_folder_src)}')
+print(f'total images of msk {len(list_folder_msk)}')
+
+for src in list_folder_src:
+    msk = src.replace("_src_", "_msk_")  # "JPG" my_string.replace("- Copy.jpg", ".jpg")
+
+    if not msk in list_folder_msk:
+        print(os.path.join(folder_src, msk))
+        shutil.move(os.path.join(folder_src, src), os.path.join(folder_missing, src))
+
