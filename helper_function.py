@@ -18,3 +18,22 @@ for filename in os.listdir(img_path):
   # save the two parts
   cv2.imwrite(os.path.join(bad_path, "corr_"+filename), bad_img)
   cv2.imwrite(os.path.join(src_path, "src_"+filename), src_img)
+
+# -----------------------------------------------------------------
+# renaming the whole images
+import os
+import glob
+import argparse
+import random
+parser = argparse.ArgumentParser(description="")
+parser.add_argument('--src', type=str, required=True, help='Path to src images')
+parser = parser.parse_args()
+
+source_folder = parser.src
+
+for filename in os.listdir(source_folder):
+    if filename.endswith("_G_1.JPG"):
+        print(filename)
+        new_filename = filename.replace("_G_1.JPG", "_1.JPG")
+        os.rename(os.path.join(source_folder, filename), os.path.join(source_folder, new_filename))
+        print(new_filename)
